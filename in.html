@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Test OpenAI API</title>
+  <style>
+    body { font-family: Arial, sans-serif; padding: 20px; }
+    textarea, input { width: 100%; padding: 10px; margin: 10px 0; }
+    #response {
+      white-space: pre-wrap;
+      background: #f0f0f0;
+      padding: 10px;
+      border-radius: 6px;
+      min-height: 100px;
+    }
+  </style>
+</head>
+<body>
+  <h2>🔧 اختبار اتصال OpenAI API</h2>
+
+  <label for="apiKey">🔑 API Key:</label>
+  <input type="text" id="apiKey" value="sk-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx" />
+
+  <label for="prompt">📝 اكتب سؤال:</label>
+  <textarea id="prompt" rows="4" placeholder="مثال: اكتبلي قصة قصيرة عن قطة."></textarea>
+
+  <button onclick="sendPrompt()">🚀 إرسال</button>
+
+  <h3>📩 الرد:</h3>
+  <div id="response">...</div>
+
+  <script>
+    async function sendPrompt() {
+      const apiKey = document.getElementById("apiKey").value.trim();
+      const prompt = document.getElementById("prompt").value.trim();
+      const responseDiv = document.getElementById("response");
+
+      if (!apiKey || !prompt) {
+        alert("من فضلك اكتب الـ API Key والسؤال");
+        return;
+      }
+
+      responseDiv.textContent = "جاري الإرسال...";
+
+      try {
+        const res = await fetch("https://api.openai.com/v1/chat/completions", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${apiKey}`
+          },
+          body: JSON.stringify({
+            model: "gpt-3.5-turbo",
+            messages: [{ role: "user", content: prompt }]
+          })
+        });
+
+        if (!res.ok) {
+          const err = await res.json();
+          responseDiv.textContent = "❌ خطأ: " + (err.error?.message || "حدث خطأ");
+          return;
+        }
+
+        const data = await res.json();
+        responseDiv.textContent = data.choices[0].message.content;
+      } catch (e) {
+        responseDiv.textContent = "❌ فشل الاتصال: " + e.message;
+      }
+    }
+  </script>
+</body>
+</html>

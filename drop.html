@@ -1,0 +1,28 @@
+
+
+
+<img src="aa.jpg" id="drag-img" style="width: 100px; height: 100px;" draggable="true" ondragstart="drage(event)" alt=""/>
+
+<div id="conten" style="width: 500px; height: 500px; border: 2px dashed gray; margin-top: 10px;" ondrop="drop(event)" ondragover="allowDrop(event)">
+</div>
+
+<script>
+
+function  drage(event){
+    event.dataTransfer.setData("itmeId",event.target.id);
+
+}
+
+function allowDrop(event){
+
+     event.preventDefault(); 
+}
+
+function drop(event){
+     var data = event.dataTransfer.getData("itmeId");
+     document.getElementById(event.target.id).appendChild(document.getElementById(data))
+
+
+}
+
+</script>

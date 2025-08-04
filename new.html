@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+    <canvas id="canvas" height="500" width="500" style="background-color: rgb(11, 107, 190);"></canvas>
+    <img src="aa.jpg" style="width: 100px; height: 100px; " draggable="true" ondrag="drage()" alt=""/>
+    <div class="conten" style="width: 500px; height: 500;"></div>
+<script>
+
+    function drage(event){
+        console.log("event", event.target.id)
+        event.dataTransfer.setData("id",event.target.id)
+    }
+
+
+
+    
+    // var can = document.getElementById("canvas");
+    // var context = can.getContext("2d");
+    // context.strokeStyle = "red";
+    // context.lineWidth = 5
+    // context.moveTo(20,20);
+    // context.lineTo(120,120);
+    // context.stroke();
+
+    // context.fillStyle = "green";
+    // context.fillRect(0 , 0 , 50 , 50);
+    // context.moveTo(20,20);
+    // context.stroke();
+
+
+
+</script>
+
+
+</body>
+</html>
